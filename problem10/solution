@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+sieve = Array.new(ARGV[0].to_i)
+
+sum = 0
+(2..sieve.size-1).each do |i|
+
+  if sieve[i].nil?
+    sum += i
+  else
+    next
+  end
+
+  index = i * 2
+  until index > sieve.size-1 do
+    sieve[index] = 1
+    index += i
+  end
+end
+
+puts sum
