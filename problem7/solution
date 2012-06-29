@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+def build_sieve
+  sieve = Array.new(10**6)
+  (0..sieve.size-1).each do |n|
+    sieve[n] = n
+  end
+  sieve[0] = nil
+  sieve[1] = nil
+
+  (2..sieve.size-1).each do |i|
+    index = i * 2
+
+    until index > sieve.size-1 do
+      sieve[index] = nil
+      index += i
+    end
+  end
+
+  sieve
+end
+
+sieve = build_sieve
+sieve.compact!
+
+puts sieve[ARGV[0].to_i-1]
+
