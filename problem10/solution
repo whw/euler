@@ -1,23 +1,21 @@
 #!/usr/bin/env ruby
 
-def build_sieve
-  sieve = Array.new(ARGV[0].to_i)
-  (0..sieve.size-1).each do |n|
-    sieve[n] = n
-  end
-  sieve[0] = nil
-  sieve[1] = nil
+sieve = Array.new(ARGV[0].to_i)
 
-  (2..sieve.size-1).each do |i|
-    index = i * 2
+sum = 0
+(2..sieve.size-1).each do |i|
 
-    until index > sieve.size-1 do
-      sieve[index] = nil
-      index += i
-    end
+  if sieve[i].nil?
+    sum += i
+  else
+    next
   end
 
-  sieve
+  index = i * 2
+  until index > sieve.size-1 do
+    sieve[index] = 1
+    index += i
+  end
 end
 
-puts build_sieve.compact.reduce(:+)
+puts sum
