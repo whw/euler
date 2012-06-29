@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+def find_triplet(sum)
+  max = sum / 2
+
+  (1..max).each do |a|
+    (1..max).each do |b|
+      (1..max).each do |c|
+        return a, b, c if Math.sqrt(a**2 + b**2) == c && (a+b+c) == sum
+      end
+    end
+  end
+end
+
+a, b, c = find_triplet(1000)
+
+puts "#{a} #{b} #{c}"
+puts a*b*c
+
