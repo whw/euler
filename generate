@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+PROJECTS_DIR = File.dirname(__FILE__)
+
+def write_solution(project_dir)
+  solution = File.join(project_dir, 'solution')
+
+  system("touch #{solution}")
+  raise "Failed to create solution file" unless $?.success?
+
+  FileUtils.chmod(0755, solution)
+end
+
+def write_rakefile(project_dir)
+  rakefile = <<-EOF
+require 'rake'
+require 'rake/testtask'
+
+Rake::TestTask.new(:default) { |t| t.pattern = 'test_solution.rb' }
+EOF
+
+  File.open(File.join(project_dir, 'Rakefile'), 'w') { |io| io << rakefile }
+end
+
+def write_test(project_dir)
+  test = <<-'EOF';
+require 'test/unit'
+
+class TestSolution < Test::Unit::TestCase
+
+  INPUT =
+  OUTPUT =
+
+  SOLUTION = File.join(File.dirname(__FILE__), "solution")
+
+  def test_solution
+    results = `#{SOLUTION} #{INPUT}`.chomp
+    raise "error!" unless $?.success?
+
+    assert_equal(results, OUTPUT)
+  end
+
+end
+EOF
+
+  File.open(File.join(project_dir, 'test_solution.rb'), 'w') do |io|
+    io << test
+  end
+end
+
+project = ARGV
+project_dir = File.join(PROJECTS_DIR, project)
+
+FileUtils.mkdir_p(project_dir)
+write_solution(project_dir)
+write_rakefile(project_dir)
+write_test(project_dir)
+
+puts "Project created: #{project}"
