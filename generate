@@ -6,10 +6,7 @@ PROJECTS_DIR = File.dirname(__FILE__)
 
 def write_solution(project_dir)
   solution = File.join(project_dir, 'solution')
-
-  system("touch #{solution}")
-  raise "Failed to create solution file" unless $?.success?
-
+  File.open(solution, 'w') { |io| io << "\#!/usr/bin/env ruby" }
   FileUtils.chmod(0755, solution)
 end
 
