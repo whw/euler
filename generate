@@ -36,7 +36,7 @@ class TestSolution < Test::Unit::TestCase
     results = `#{SOLUTION} #{INPUT}`.chomp
     raise "error!" unless $?.success?
 
-    assert_equal(results, OUTPUT)
+    assert_equal(results.to_i, OUTPUT)
   end
 
 end
