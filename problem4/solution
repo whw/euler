@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+def is_palindrome(number)
+  number == number.to_s.reverse.to_i
+end
+
+digits = ARGV[0].to_i
+
+largest = -1
+
+range = (10**(digits-1)..(10**digits)-1)
+
+range.each do |a|
+  range.each do |b|
+
+    product = a * b
+    largest = product if is_palindrome(product) && product > largest
+
+  end
+end
+
+puts largest
