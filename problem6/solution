@@ -1,0 +1,12 @@
+sum_to_square = 0
+sum_of_square = 0
+(1..100).each do |n|
+ 
+  sum_of_square += n*n
+  sum_to_square += n
+end
+
+sum_to_square *= sum_to_square
+
+diff = sum_to_square - sum_of_square
+puts diff
