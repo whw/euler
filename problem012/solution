@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+def factor(number)
+  recursive_factor(number, []).sort
+end
+
+def recursive_factor(number, factors)
+  (2..Math.sqrt(number).to_i).each do |possible_factor|
+    if number % possible_factor == 0
+      factors.push(possible_factor)
+      return recursive_factor(number / possible_factor, factors)
+    end
+  end
+
+  factors.push(number)
+end
+
+# Magic way of finding divisors
+def num_divisors(number)
+  factors = factor(number)
+  exponents = factors.group_by{ |i| i }.map{ |k, v| v.size }
+
+  num_divisors = exponents.map{ |e| e + 1 }.reduce(:*)
+end
+
+def generate_triangle_number(n)
+  (1..n).reduce(:+)
+end
+
+triangle_number = -1
+i = 1
+
+while true do
+  triangle_number = generate_triangle_number(i)
+  divisors = num_divisors(triangle_number)
+  break if divisors > ARGV[0].to_i
+  i = i + 1
+end
+
+puts triangle_number
