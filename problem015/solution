@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+def factorial(n)
+  return n if n == 1
+
+  n * factorial(n-1)
+end
+
+puts factorial(40) / (factorial(20)**2)
